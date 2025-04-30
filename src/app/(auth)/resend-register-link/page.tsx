@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -34,15 +34,14 @@ const ResendRegisterLink = () => {
     },
   });
 
-  const resendEmail = async (values: z.infer<typeof formSchema>, e: any) => {
+  const resendEmail = async (values: z.infer<typeof formSchema>) => {
     toast.dismiss();
-    e.preventDefault();
     setLoader(true);
     try {
       await axios.post("/api/resend-verification-link", values);
       toast.success("Reset Link Sent Successfully");
       setLoader(false);
-    } catch (e: any) {
+    } catch {
       toast.error("Email not registered");
       setLoader(false);
     }

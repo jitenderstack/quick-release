@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -92,7 +92,7 @@ const Register = () => {
     await requestHandler(
       async () => await registerUserRequest(values),
       setLoader,
-      (res: any) => {
+      (res) => {
         const { message } = res;
         showNotification("success", message);
         router.push("/");
@@ -103,240 +103,251 @@ const Register = () => {
     );
   }
   return (
-    <>
-      <div className="flex flex-col items-center justify-center px-6 py-12 mx-auto ">
-        <Link
-          href="/"
-          className="flex items-center mb-6  mt-8 text-2xl font-medium text-gray-900 dark:text-white"
-        >
-          <Image
-            className="w-8 h-8 mr-2"
-            src={WEB_DETAILS.favicon}
-            alt="logo"
-            width={32}
-            height={32}
-          />
-          {WEB_DETAILS.name}
-        </Link>{" "}
-        <div className="w-full bg-white rounded-lg shadow-sm dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mb-4">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              {"Create your account"}
-            </h1>{" "}
-            <form
-              className="space-y-4 md:space-y-6"
-              onSubmit={handleSubmit(createUser)}
-            >
-              <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                <div>
-                  <label
-                    htmlFor="first-name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    {"First Name"}
-                  </label>{" "}
-                  <Input
-                    type="text"
-                    id="first-name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-600 dark:focus:border-blue-600"
-                    placeholder="First name"
-                    {...register("firstName")}
-                  />
-                  {errors.firstName && (
-                    <p className="text-red-600 text-[11px] pt-1">
-                      {errors.firstName.message}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="last-name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    {"Last Name"}
-                  </label>{" "}
-                  <Input
-                    type="text"
-                    id="last-name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Last name"
-                    {...register("lastName")}
-                  />
-                  {errors.lastName && (
-                    <span className="text-red-600 text-[11px] pt-1">
-                      {errors.lastName.message}
-                    </span>
-                  )}
-                </div>
-              </div>{" "}
+    <div className="flex flex-col items-center justify-center px-6 py-12 mx-auto ">
+      <Link
+        href="/"
+        className="flex items-center mb-6  mt-8 text-2xl font-medium text-gray-900 dark:text-white"
+      >
+        <Image
+          className="w-8 h-8 mr-2"
+          src={WEB_DETAILS.favicon}
+          alt="logo"
+          width={32}
+          height={32}
+        />
+        {WEB_DETAILS.name}
+      </Link>{" "}
+      <div className="w-full bg-white rounded-lg shadow-sm dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mb-4">
+        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            {"Create your account"}
+          </h1>{" "}
+          <form
+            className="space-y-4 md:space-y-6"
+            onSubmit={handleSubmit(createUser)}
+          >
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="first-name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  {"Your email"}
-                </label>{" "}
-                <Input
-                  type="email"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <span className="text-red-600 text-[11px] pt-1">
-                    {errors.email.message}
-                  </span>
-                )}
-              </div>{" "}
-              <div>
-                <label
-                  htmlFor="company-name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  {"Organization Name"}
+                  {"First Name"}
                 </label>{" "}
                 <Input
                   type="text"
-                  id="organisation-name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Company name"
-                  {...register("orgName")}
+                  id="first-name"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-600 dark:focus:border-blue-600"
+                  placeholder="First name"
+                  {...register("firstName")}
                 />
-                {errors.orgName && (
-                  <span className="text-red-600 text-[11px] pt-1">
-                    {errors.orgName.message}
-                  </span>
+                {errors.firstName && (
+                  <p className="text-red-600 text-[11px] pt-1">
+                    {errors.firstName.message}
+                  </p>
                 )}
-              </div>{" "}
+              </div>
+
               <div>
                 <label
-                  htmlFor="password"
+                  htmlFor="last-name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  {"Password"}
+                  {"Last Name"}
                 </label>{" "}
-                <div className="flex items-center focus-within:border-2 focus-within:border-blue-600 bg-gray-50 border border-gray-300 rounded-lg">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    placeholder="••••••••"
-                    {...register("password")}
-                    className=" p-[0.70rem] bg-gray-50  border-gray-300 text-gray-900 sm:text-sm rounded-lg border-none focus-within:border-none focus-within:ring-0 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  />
-
-                  <div
-                    className="px-4 cursor-pointer"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeIcon className="w-6 h-6" />
-                    ) : (
-                      <EyeSlashIcon className="w-6 h-6" />
-                    )}
-                  </div>
-                </div>
-                {errors.password && (
+                <Input
+                  type="text"
+                  id="last-name"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Last name"
+                  {...register("lastName")}
+                />
+                {errors.lastName && (
                   <span className="text-red-600 text-[11px] pt-1">
-                    {errors.password.message}
+                    {errors.lastName.message}
                   </span>
                 )}
               </div>
-              <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  {"Confirm Password"}
-                </label>{" "}
-                <div className="flex items-center focus-within:border-2 focus-within:border-blue-600 bg-gray-50 border border-gray-300 rounded-lg">
-                  <Input
-                    type={showConfirmPassword ? "text" : "password"}
-                    id="confirm-password"
-                    placeholder="••••••••"
-                    {...register("confirmPassword")}
-                    className=" p-[0.70rem] bg-gray-50  border-gray-300 text-gray-900 sm:text-sm rounded-lg border-none focus-within:border-none focus-within:ring-0 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  />
-
-                  <div
-                    className="px-4 cursor-pointer"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeIcon className="w-6 h-6" />
-                    ) : (
-                      <EyeSlashIcon className="w-6 h-6" />
-                    )}
-                  </div>
-                </div>
-                {errors.confirmPassword && (
-                  <span className="text-red-600 text-[11px] pt-1">
-                    {errors.confirmPassword.message}
-                  </span>
-                )}
-              </div>{" "}
-              <div className="flex items-start">
-                <div className="flex items-center h-5">
-                  <Input
-                    id="terms"
-                    aria-describedby="terms"
-                    type="checkbox"
-                    {...register("terms")}
-                    className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                  />
-                </div>{" "}
-                <div className="ml-3 text-sm">
-                  <label
-                    htmlFor="terms"
-                    className="font-light text-gray-500 dark:text-gray-300"
-                  >
-                    {"I accept the "}
-                    <a
-                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      href="#"
-                    >
-                      {"Terms and Conditions"}
-                    </a>
-                  </label>
-                </div>
-              </div>{" "}
-              {errors.terms && (
+            </div>{" "}
+            <div>
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {"Your email"}
+              </label>{" "}
+              <Input
+                type="email"
+                id="email"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="name@company.com"
+                {...register("email")}
+              />
+              {errors.email && (
                 <span className="text-red-600 text-[11px] pt-1">
-                  {errors.terms.message}
+                  {errors.email.message}
                 </span>
               )}
-              <a href="/quick-release/signup/team" className="mt-4">
+            </div>{" "}
+            <div>
+              <label
+                htmlFor="company-name"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {"Organization Name"}
+              </label>{" "}
+              <Input
+                type="text"
+                id="organisation-name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Company name"
+                {...register("orgName")}
+              />
+              {errors.orgName && (
+                <span className="text-red-600 text-[11px] pt-1">
+                  {errors.orgName.message}
+                </span>
+              )}
+            </div>{" "}
+            <div>
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {"Password"}
+              </label>{" "}
+              <div className="flex items-center focus-within:border-2 focus-within:border-blue-600 bg-gray-50 border border-gray-300 rounded-lg">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder="••••••••"
+                  {...register("password")}
+                  className=" p-[0.70rem] bg-gray-50  border-gray-300 text-gray-900 sm:text-sm rounded-lg border-none focus-within:border-none focus-within:ring-0 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                />
+
                 <button
-                  type="submit"
-                  disabled={loader}
-                  className={`w-full mt-4  text-white ${
-                    loader ? "bg-blue-400" : "bg-blue-600"
-                  } focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
+                  type="button"
+                  className="px-4"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setShowPassword(!showPassword);
+                    }
+                  }}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {loader ? (
-                    <div className="flex items-center justify-center gap-4">
-                      <Spin className="h-[25px] w-[25px]" />
-                    </div>
+                  {showPassword ? (
+                    <EyeIcon className="w-6 h-6" />
                   ) : (
-                    "Create an account"
+                    <EyeSlashIcon className="w-6 h-6" />
                   )}
                 </button>
-              </a>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                {"Already have an account? "}
-                <Link
-                  href="/"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              </div>
+              {errors.password && (
+                <span className="text-red-600 text-[11px] pt-1">
+                  {errors.password.message}
+                </span>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="confirm-password"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {"Confirm Password"}
+              </label>{" "}
+              <div className="flex items-center focus-within:border-2 focus-within:border-blue-600 bg-gray-50 border border-gray-300 rounded-lg">
+                <Input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirm-password"
+                  placeholder="••••••••"
+                  {...register("confirmPassword")}
+                  className=" p-[0.70rem] bg-gray-50  border-gray-300 text-gray-900 sm:text-sm rounded-lg border-none focus-within:border-none focus-within:ring-0 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                />
+
+                <button
+                  type="button"
+                  className="px-4"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setShowConfirmPassword(!showConfirmPassword);
+                    }
+                  }}
+                  aria-label={
+                    showConfirmPassword ? "Hide password" : "Show password"
+                  }
                 >
-                  {"Login here"}
-                </Link>
-              </p>
-            </form>
-          </div>
+                  {showConfirmPassword ? (
+                    <EyeIcon className="w-6 h-6" />
+                  ) : (
+                    <EyeSlashIcon className="w-6 h-6" />
+                  )}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <span className="text-red-600 text-[11px] pt-1">
+                  {errors.confirmPassword.message}
+                </span>
+              )}
+            </div>{" "}
+            <div className="flex items-start">
+              <div className="flex items-center h-5">
+                <Input
+                  id="terms"
+                  aria-describedby="terms"
+                  type="checkbox"
+                  {...register("terms")}
+                  className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                />
+              </div>{" "}
+              <div className="ml-3 text-sm">
+                <label
+                  htmlFor="terms"
+                  className="font-light text-gray-500 dark:text-gray-300"
+                >
+                  {"I accept the "}
+                  <div className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                    {"Terms and Conditions"}
+                  </div>
+                </label>
+              </div>
+            </div>{" "}
+            {errors.terms && (
+              <span className="text-red-600 text-[11px] pt-1">
+                {errors.terms.message}
+              </span>
+            )}
+            <a href="/quick-release/signup/team" className="mt-4">
+              <button
+                type="submit"
+                disabled={loader}
+                className={`w-full mt-4  text-white ${
+                  loader ? "bg-blue-400" : "bg-blue-600"
+                } focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
+              >
+                {loader ? (
+                  <div className="flex items-center justify-center gap-4">
+                    <Spin className="h-[25px] w-[25px]" />
+                  </div>
+                ) : (
+                  "Create an account"
+                )}
+              </button>
+            </a>
+            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              {"Already have an account? "}
+              <Link
+                href="/"
+                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              >
+                {"Login here"}
+              </Link>
+            </p>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

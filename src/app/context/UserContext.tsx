@@ -44,10 +44,10 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Function to fetch the logged in user details
   const getLoggedInUserDetails = async () => {
-    await requestHandler(
+    await requestHandler<any>(
       async () => await getLoggedInUserDetailsRequest(),
       setIsLoading,
-      (res: any) => {
+      (res) => {
         const { data } = res;
         setLoggedInUser(data);
       },

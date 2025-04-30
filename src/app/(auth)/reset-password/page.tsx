@@ -11,7 +11,7 @@ import { User } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -22,7 +22,7 @@ import { EyeIcon } from "lucide-react";
 import { Input } from "@/atoms/input";
 import Spin from "@/atoms/Spin";
 
-const ResetPassword = ({ params }: { params: { token: string } }) => {
+const ResetPassword = () => {
   const [user, setUser] = useState<User | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const search = useSearchParams();
@@ -56,8 +56,7 @@ const ResetPassword = ({ params }: { params: { token: string } }) => {
     },
   });
 
-  const resetPassword = async (values: z.infer<typeof formSchema>, e: any) => {
-    e.preventDefault();
+  const resetPassword = async (values: z.infer<typeof formSchema>) => {
     setLoader(true);
 
     const data = {
@@ -68,12 +67,12 @@ const ResetPassword = ({ params }: { params: { token: string } }) => {
     await requestHandler(
       () => resetPasswordRequest(data),
       setLoader,
-      (res: any) => {
+      (res: { message: string }) => {
         const { message } = res;
         showNotification("success", message);
         router.push("/");
       },
-      (err: any) => {
+      (err: string) => {
         showNotification("error", err);
       }
     );
@@ -83,13 +82,13 @@ const ResetPassword = ({ params }: { params: { token: string } }) => {
     const verifyToken = async () => {
       toast.dismiss();
       if (token) {
-        await requestHandler(
+        await requestHandler<User>(
           async () => await verifyResetTokenRequest({ token }),
           setLoader,
-          (res: any) => {
+          (res) => {
             setUser(res.data);
           },
-          (err: any) => {
+          (err: string) => {
             toast.error(err);
             router.push("/");
           }
@@ -97,6 +96,7 @@ const ResetPassword = ({ params }: { params: { token: string } }) => {
       }
     };
     verifyToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -141,16 +141,25 @@ const ResetPassword = ({ params }: { params: { token: string } }) => {
                       className=" p-[0.70rem] bg-gray-50  border-gray-300 text-gray-900 sm:text-sm rounded-lg border-none focus-within:border-none focus-within:ring-0 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     />
 
-                    <div
-                      className="px-4 cursor-pointer"
+                    <button
+                      type="button"
+                      className="px-4"
                       onClick={() => setShowPassword(!showPassword)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          setShowPassword(!showPassword);
+                        }
+                      }}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
                     >
                       {showPassword ? (
                         <EyeSlashIcon className="w-6 h-6" />
                       ) : (
                         <EyeIcon className="w-6 h-6" />
                       )}
-                    </div>
+                    </button>
                   </div>
                 </div>{" "}
                 {errors.password && (

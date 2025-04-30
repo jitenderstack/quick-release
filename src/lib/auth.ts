@@ -2,7 +2,6 @@ import { db } from "@/lib/db";
 import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextResponse } from "next/server";
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -42,8 +41,7 @@ export const authOptions: NextAuthOptions = {
         email: {},
         password: {},
       },
-      // @ts-ignore
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const uniqueUser = await db.users.findUnique({
           where: {
             email: credentials?.email,
@@ -53,7 +51,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Incorrect Credentials!");
         }
         const checkPassword = await compare(
-          credentials?.password || "",
+          credentials?.password ?? "",
           uniqueUser?.password
         );
 
@@ -69,13 +67,13 @@ export const authOptions: NextAuthOptions = {
         }
         if (checkPassword) {
           return {
-            user: uniqueUser,
             id: uniqueUser.cuid,
             email: uniqueUser.email,
+            name: `${uniqueUser.firstName} ${uniqueUser.lastName}`,
           };
         }
 
-        return uniqueUser;
+        return null;
       },
     }),
   ],

@@ -1,5 +1,3 @@
-import { fileUploadRequest } from "@/fetchHandlers/file";
-import { db } from "@/lib/db";
 import { AxiosResponse } from "axios";
 import { toast, TypeOptions } from "react-toastify";
 
@@ -13,10 +11,10 @@ export const showNotification = (type: TypeOptions, message: string) => {
   }, 500);
 };
 
-export const requestHandler = async (
-  api: () => Promise<AxiosResponse<any, any>>,
+export const requestHandler = async <T>(
+  api: () => Promise<AxiosResponse<T, unknown>>,
   setLoading: ((loading: boolean) => void) | null,
-  onSuccess: (data: any) => void,
+  onSuccess: (data: T) => void,
   onError: (errorMessage: string) => void
 ) => {
   toast.dismiss();
@@ -30,7 +28,7 @@ export const requestHandler = async (
     }
   } catch (error: any) {
     const errorMessage =
-      error?.response?.data?.message || "Something went wrong";
+      error?.response?.data?.message ?? "Something went wrong";
     onError(errorMessage);
   } finally {
     // Hide loading state if setLoading function is provided
