@@ -209,7 +209,7 @@ const FeedbackSideNav: React.FC<SideNavProps> = ({
                         {() => (
                           <div
                             onClick={() => onSelectBoards(feedbackBoards?.id!)}
-                            className="cursor-pointer text-gray-700 flex justify-between px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-4"
+                            className="cursor-pointer text-gray-700  justify-between px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-4"
                           >
                             <div className=" flex items-center gap-2">
                               <Checkbox
