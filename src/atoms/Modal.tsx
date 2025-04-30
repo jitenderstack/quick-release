@@ -1,8 +1,9 @@
 "use client";
 
+import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Dispatch, Fragment, SetStateAction, useState } from "react";
+import { Dispatch, Fragment, SetStateAction } from "react";
 import Spin from "./Spin";
 
 interface ModalProps {
@@ -11,7 +12,7 @@ interface ModalProps {
   children?: React.ReactNode;
   buttonText: string;
   title?: string;
-  onClick?: any;
+  onClick?: () => void;
   loading?: boolean;
 }
 
@@ -26,10 +27,6 @@ export default function Modal({
 }: ModalProps) {
   function closeModal() {
     setIsOpen(!open);
-  }
-
-  function openModal() {
-    setIsOpen(open);
   }
 
   return (

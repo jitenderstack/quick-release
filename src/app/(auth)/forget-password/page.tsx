@@ -37,7 +37,10 @@ const ForgotPassword = () => {
     },
   });
 
-  const forgetPassword = async (values: z.infer<typeof formSchema>, e: any) => {
+  const forgetPassword = async (
+    values: z.infer<typeof formSchema>,
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     setLoader(true);
     await requestHandler(
