@@ -99,7 +99,7 @@ const ForgotPassword = () => {
             </div>{" "}
             <Button
               type="submit"
-              disabled={loader || errors.email ? true : false}
+              disabled={loader || !!errors.email}
               className={`w-full mt-4 text-white bg-blue-600 focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
             >
               {loader ? (

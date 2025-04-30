@@ -1,7 +1,12 @@
 "use client";
 import { useFeedbackPostContext } from "@/app/context/FeedbackPostContext";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import React, { useEffect, useMemo, useRef } from "react";
 import FeedbackCardItem from "./FeedbackCardItem";
 import { InboxIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/atoms/button";
@@ -24,7 +29,7 @@ export default function FeedbackPublicContentContainer({
 }: FeedbackPublicContentContainerPropsType) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const {projectName} = useParams();
+  const { projectName } = useParams();
   const loadMoreRef = useRef(null);
   const isVisible = useOnScreen(loadMoreRef);
   const router = useRouter();
@@ -49,7 +54,6 @@ export default function FeedbackPublicContentContainer({
     }
     return null;
   }, [searchParams]);
-
 
   const {
     list: feedbackPostList,
@@ -104,15 +108,13 @@ export default function FeedbackPublicContentContainer({
             <div className="sm:w-0 sm:flex-1" data-svelte-h="svelte-4musx2">
               <div className="flex items-center gap-2">
                 <h1 className="text-lg font-medium text-gray-900">
-                  {board
-                    ? board
-                    : feedbackBoards.find((b) => b.isDefault)?.name}
+                  {board || feedbackBoards.find((b) => b.isDefault)?.name}
                 </h1>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center gap-2 px-4 md:px-8 py-4">
+        <div className="flex flex-col  sm:flex-row sm:justify-between sm:items-center gap-2 px-4 md:px-8 py-4">
           <div className="flex items-center gap-4">
             <Button
               className={`bg-white border border-gray-300 text-gray-700 flex gap-2 focus:bg-gray-200 ${
@@ -158,8 +160,11 @@ export default function FeedbackPublicContentContainer({
               </div>
             </li>
           )}
-          {sortedFeedbackPostList?.map((feedbackPost) => (
-            <FeedbackCardItem feedback={feedbackPostMap[feedbackPost]!} />
+          {sortedFeedbackPostList?.map((feedbackPost, index) => (
+            <FeedbackCardItem
+              key={"feedback" + index}
+              feedback={feedbackPostMap[feedbackPost]!}
+            />
           ))}
           <li
             ref={loadMoreRef}

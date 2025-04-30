@@ -1,5 +1,3 @@
-import { fileUploadRequest } from "@/fetchHandlers/file";
-import { db } from "@/lib/db";
 import { AxiosResponse } from "axios";
 import { toast, TypeOptions } from "react-toastify";
 
@@ -30,7 +28,7 @@ export const requestHandler = async (
     }
   } catch (error: any) {
     const errorMessage =
-      error?.response?.data?.message || "Something went wrong";
+      error?.response?.data?.message ?? "Something went wrong";
     onError(errorMessage);
   } finally {
     // Hide loading state if setLoading function is provided

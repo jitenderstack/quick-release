@@ -38,7 +38,6 @@ export async function generateMetadata(
     return { title: "changelog Not Found" };
   }
 
-  const previousImages = (await parent).openGraph?.images || [];
   const fullName = `${changelog.createdBy?.firstName || ""} ${
     changelog.createdBy?.lastName || ""
   }`.trim();

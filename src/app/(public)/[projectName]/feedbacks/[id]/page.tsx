@@ -38,7 +38,6 @@ export async function generateMetadata(
     return { title: "feedback Not Found" };
   }
 
-  const previousImages = (await parent).openGraph?.images || [];
   const fullName = `${feedback.createdBy?.firstName || ""} ${
     feedback.createdBy?.lastName || ""
   }`.trim();

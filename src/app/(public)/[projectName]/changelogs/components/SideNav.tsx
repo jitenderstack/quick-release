@@ -9,7 +9,6 @@ import {
   useParams,
 } from "next/navigation";
 import { useChangeLogContext } from "@/app/context/ChangeLogContext";
-import { classNames } from "@/lib/utils";
 import { ReleaseTagType } from "@/types";
 
 type SideNavProps = {
@@ -26,11 +25,7 @@ const SideNav: React.FC<SideNavProps> = ({
   const { projectName } = useParams();
 
   const searchParams = useSearchParams();
-  const {
-    isLoading: isFetchingChangeLogs,
-    list: changeLogsList,
-    getAllPublicChangeLogs,
-  } = useChangeLogContext();
+  const { getAllPublicChangeLogs } = useChangeLogContext();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);

@@ -1,6 +1,6 @@
 "use client";
 import { updateQueryParams } from "@/Utils";
-import { FeedbackStatus, FeedbackVisibilityStatus } from "@/Utils/constants";
+import { FeedbackStatus } from "@/Utils/constants";
 import { classNames } from "@/lib/utils";
 import { FeedbackPostType } from "@/types";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
@@ -8,13 +8,12 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useMemo } from "react";
 
 const FeedbackCardItem: React.FC<{
-  feedback?: FeedbackPostType;
+  feedback: FeedbackPostType;
 }> = ({ feedback }) => {
-  if (!feedback) return null;
-
   const params = useParams();
   const searchParams = useSearchParams();
   const { projectName } = params;
+
   const board = useMemo(() => {
     const data = searchParams.get("board");
     if (data && data !== "") {

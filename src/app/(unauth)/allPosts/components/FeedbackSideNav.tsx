@@ -298,10 +298,7 @@ const FeedbackSideNav: React.FC<SideNavProps> = ({
           aria-label="Message list"
           data-svelte-h="svelte-3mai4c"
         >
-          <ul
-            className="divide-y divide-gray-200 border-b border-gray-200"
-            role="list"
-          >
+          <ul className="divide-y divide-gray-200 border-b border-gray-200">
             {!isFetchingFeedback && !feedbackList?.length && (
               <li
                 key="empty-list-item"

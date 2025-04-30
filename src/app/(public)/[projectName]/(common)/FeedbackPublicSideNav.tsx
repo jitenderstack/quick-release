@@ -3,12 +3,7 @@
 import { useFeedbackPostContext } from "@/app/context/FeedbackPostContext";
 import { IFeedbackBoard } from "@/interfaces";
 import { classNames } from "@/lib/utils";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 
 type FeedbackPublicSideNavPropsType = {
@@ -20,7 +15,6 @@ const FeedbackPublicSideNav: React.FC<FeedbackPublicSideNavPropsType> = ({
 }) => {
   const router = useRouter();
   const fullPathname = usePathname();
-  const { projectName } = useParams();
 
   const pathname = useMemo(() => {
     if (
@@ -62,8 +56,7 @@ const FeedbackPublicSideNav: React.FC<FeedbackPublicSideNavPropsType> = ({
     }
     return null;
   }, [searchParams]);
-  const { feedbackSideNav, setFeedbackSideNav, getAllPublicFeedbackPosts } =
-    useFeedbackPostContext();
+  const { feedbackSideNav, setFeedbackSideNav } = useFeedbackPostContext();
 
   const updateQueryParams = (
     board: string | null,
@@ -117,12 +110,11 @@ const FeedbackPublicSideNav: React.FC<FeedbackPublicSideNavPropsType> = ({
           aria-label="Message list"
           data-svelte-h="svelte-3mai4c"
         >
-          <ul
-            className="divide-y divide-gray-200 border-b border-gray-200"
-            role="list"
-          >
+          <ul className="divide-y divide-gray-200 border-b border-gray-200">
             {feedbackBoards.map((boardDetails) => (
               <li
+                role="button"
+                tabIndex={0}
                 key={boardDetails.id}
                 onClick={() => onSelectBoard(boardDetails.name!)}
                 className={classNames(
